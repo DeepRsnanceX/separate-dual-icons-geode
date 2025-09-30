@@ -16,7 +16,7 @@ class $modify(MyProfilePage, ProfilePage) {
     void toggleShip(CCObject* sender) {
         ProfilePage::toggleShip(sender);
 
-        auto ship = as<CCNode*>(sender)->getChildByType<SimplePlayer>(0);
+        auto ship = static_cast<CCNode*>(sender)->getChildByType<SimplePlayer>(0);
         auto GM = GameManager::get();
 
         if (GDI_GET_VALUE(bool, "2pselected", false)) {
@@ -73,7 +73,7 @@ class $modify(MyProfilePage, ProfilePage) {
             jetpack = menu->getChildByID("player-jetpack")->getChildByType<SimplePlayer>(0);
         //
 
-        if (as<CCMenuItemToggler*>(sender)->isOn()) {
+        if (static_cast<CCMenuItemToggler*>(sender)->isOn()) {
             GDI_SET_VALUE(bool, "2pselected", false);
 
             cube->updatePlayerFrame(GM->getPlayerFrame(), IconType::Cube);

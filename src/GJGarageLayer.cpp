@@ -9,7 +9,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
     };
     
     void on2PToggle(CCObject* sender) {
-        auto btn = as<CCMenuItemSpriteExtra*>(sender);
+        auto btn = static_cast<CCMenuItemSpriteExtra*>(sender);
         if (btn->getID() == "player1-button") GDI_SET_VALUE(bool, "2pselected", false);
         else GDI_SET_VALUE(bool, "2pselected", true);
 
@@ -31,8 +31,8 @@ class $modify(MyGarageLayer, GJGarageLayer) {
             int tag = 0;
             int tag2 = 0;
 
-            as<CCSprite*>(cursor1)->setColor({0, 255, 255});
-            as<CCSprite*>(cursor2)->setColor({0, 255, 255});
+            static_cast<CCSprite*>(cursor1)->setColor({0, 255, 255});
+            static_cast<CCSprite*>(cursor2)->setColor({0, 255, 255});
 
             switch (m_fields->type) {
                 case IconType::Cube:
@@ -109,8 +109,8 @@ class $modify(MyGarageLayer, GJGarageLayer) {
             int tag = 0;
             int tag2 = 0;
 
-            as<CCSprite*>(cursor1)->setColor({255, 255, 0});
-            as<CCSprite*>(cursor2)->setColor({255, 255, 0});
+            static_cast<CCSprite*>(cursor1)->setColor({255, 255, 0});
+            static_cast<CCSprite*>(cursor2)->setColor({255, 255, 0});
 
             switch (m_fields->type) {
                 case IconType::Cube:
@@ -253,8 +253,8 @@ class $modify(MyGarageLayer, GJGarageLayer) {
             this->getChildByID("arrow-2")->setVisible(false);
         }
 
-        auto cursor1 = as<CCSprite*>(this->getChildByID("cursor-1"));
-        auto cursor2 = as<CCSprite*>(this->getChildByID("cursor-2"));
+        auto cursor1 = static_cast<CCSprite*>(this->getChildByID("cursor-1"));
+        auto cursor2 = static_cast<CCSprite*>(this->getChildByID("cursor-2"));
 
         if (cursor1->getColor() == ccColor3B({255, 255, 0})) {
             cursor1->setColor({0, 255, 255});
@@ -265,8 +265,8 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         }
 
 
-        auto player1 = as<SimplePlayer*>(this->getChildByID("player-icon"));
-        auto player2 = as<SimplePlayer*>(this->getChildByID("player2-icon"));
+        auto player1 = static_cast<SimplePlayer*>(this->getChildByID("player-icon"));
+        auto player2 = static_cast<SimplePlayer*>(this->getChildByID("player2-icon"));
         switch ((int)GM->m_playerIconType) {
             case 0:
                 player1->updatePlayerFrame(GM->m_playerFrame, IconType::Cube);
@@ -340,7 +340,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
     void onSpecialRep(CCObject* sender) {
         if (GDI_GET_VALUE(bool, "2pselected", false)) {
-            Mod::get()->setSavedValue<bool>("deathexplode", !as<CCMenuItemToggler*>(sender)->isOn());
+            Mod::get()->setSavedValue<bool>("deathexplode", !static_cast<CCMenuItemToggler*>(sender)->isOn());
         } else {
             GameManager::get()->toggleGameVariable("0153");
         }
@@ -356,10 +356,10 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         auto GM = GameManager::get();
         auto winSize = CCDirector::get()->getWinSize();
 
-        as<CCSprite*>(this->getChildByID("cursor-1"))->setColor({255, 255, 0});
-        as<CCSprite*>(this->getChildByID("cursor-2"))->setColor({255, 255, 0});
+        static_cast<CCSprite*>(this->getChildByID("cursor-1"))->setColor({255, 255, 0});
+        static_cast<CCSprite*>(this->getChildByID("cursor-2"))->setColor({255, 255, 0});
 
-        SimplePlayer* player1 = as<SimplePlayer*>(this->getChildByID("player-icon"));
+        SimplePlayer* player1 = static_cast<SimplePlayer*>(this->getChildByID("player-icon"));
         player1->setPositionX(player1->getPositionX() - winSize.width/12);
 
         auto player2 = SimplePlayer::create(0);
@@ -625,12 +625,12 @@ class $modify(MyGarageLayer, GJGarageLayer) {
             && isUnlocked
             // && m_fields->type != IconType::DeathEffect
         ) {
-            auto player2 = as<SimplePlayer*>(this->getChildByID("player2-icon"));
+            auto player2 = static_cast<SimplePlayer*>(this->getChildByID("player2-icon"));
             auto winSize = CCDirector::get()->getWinSize();
             bool isShipTrail = false;
 
 
-            if (as<int>(m_fields->type) < 10) {
+            if (static_cast<int>(m_fields->type) < 10) {
                 player2->updatePlayerFrame(n, m_fields->type);
                 player2->updateColors();
             }
@@ -737,7 +737,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     break;
                 case IconType::Special:
                     // please dont shit on me this is the only way LOL
-                    if (as<CCNode*>(sender)->getParent()->getParent()->getParent()->getParent()->getParent()->getParent()->getID() == "GJGarageLayer") {
+                    if (static_cast<CCNode*>(sender)->getParent()->getParent()->getParent()->getParent()->getParent()->getParent()->getID() == "GJGarageLayer") {
                         if (GM->isIconUnlocked(n, IconType::Special) && (GDI_GET_VALUE(int64_t, "lasttype", 0) != 99 || GDI_GET_VALUE(int64_t, "trail", 1) != n)) {
                             GDI_SET_VALUE(int64_t, "trail", n);
                             GDI_SET_VALUE(int64_t, "lasttype", 99);
@@ -745,7 +745,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                             GJGarageLayer::showUnlockPopup(n, UnlockType::Streak);
                             return; 
                         }
-                    } else if (as<CCNode*>(sender)->getParent()->getParent()->getParent()->getParent()->getParent()->getParent()->getParent()->getID() == "GJGarageLayer") {
+                    } else if (static_cast<CCNode*>(sender)->getParent()->getParent()->getParent()->getParent()->getParent()->getParent()->getParent()->getID() == "GJGarageLayer") {
                         if (GM->isIconUnlocked(n, IconType::ShipFire) && (GDI_GET_VALUE(int64_t, "lasttype", 0) != 101 || GDI_GET_VALUE(int64_t, "shiptrail", 1) != n)) {
                             GDI_SET_VALUE(int64_t, "shiptrail", n);
                             GDI_SET_VALUE(int64_t, "lasttype", 101);
@@ -770,7 +770,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     break;
             }
 
-            if (as<int>(m_fields->type) < 10) {
+            if (static_cast<int>(m_fields->type) < 10) {
                 player2->updatePlayerFrame(n, m_fields->type);
                 player2->updateColors();
             }
@@ -781,7 +781,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
             else
                 cursor = this->getChildByID("cursor-1");
 
-            cursor->setPosition({as<CCNode*>(sender)->getPositionX() + winSize.width/2, as<CCNode*>(sender)->getPositionY() + winSize.height/2});
+            cursor->setPosition({static_cast<CCNode*>(sender)->getPositionX() + winSize.width/2, static_cast<CCNode*>(sender)->getPositionY() + winSize.height/2});
             cursor->setVisible(true);
 
         } else {

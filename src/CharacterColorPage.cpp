@@ -19,7 +19,7 @@ class $modify(CharacterColorPage) {
             auto menu = layer->getChildByID("buttons-menu");
             auto winSize = CCDirector::get()->getWinSize();
 
-            auto cube = as<SimplePlayer*>(layer->getChildByID("cube-icon"));
+            auto cube = static_cast<SimplePlayer*>(layer->getChildByID("cube-icon"));
             cube->updatePlayerFrame(GDI_GET_VALUE(int64_t, "cube", 1), IconType::Cube);
             cube->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
             cube->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
@@ -39,7 +39,7 @@ class $modify(CharacterColorPage) {
                 ship->disableGlowOutline();
             }
 
-            auto ball = as<SimplePlayer*>(layer->getChildByID("ball-icon"));
+            auto ball = static_cast<SimplePlayer*>(layer->getChildByID("ball-icon"));
             ball->updatePlayerFrame(GDI_GET_VALUE(int64_t, "roll", 1), IconType::Ball);
             ball->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
             ball->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
@@ -49,7 +49,7 @@ class $modify(CharacterColorPage) {
                 ball->disableGlowOutline();
             }
 
-            auto ufo = as<SimplePlayer*>(layer->getChildByID("ufo-icon"));
+            auto ufo = static_cast<SimplePlayer*>(layer->getChildByID("ufo-icon"));
             ufo->updatePlayerFrame(GDI_GET_VALUE(int64_t, "bird", 1), IconType::Ufo);
             ufo->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
             ufo->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
@@ -59,7 +59,7 @@ class $modify(CharacterColorPage) {
                 ufo->disableGlowOutline();
             }
 
-            auto wave = as<SimplePlayer*>(layer->getChildByID("wave-icon"));
+            auto wave = static_cast<SimplePlayer*>(layer->getChildByID("wave-icon"));
             wave->updatePlayerFrame(GDI_GET_VALUE(int64_t, "dart", 1), IconType::Wave);
             wave->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
             wave->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
@@ -69,7 +69,7 @@ class $modify(CharacterColorPage) {
                 wave->disableGlowOutline();
             }
 
-            auto robot = as<SimplePlayer*>(layer->getChildByID("robot-icon"));
+            auto robot = static_cast<SimplePlayer*>(layer->getChildByID("robot-icon"));
             robot->updatePlayerFrame(GDI_GET_VALUE(int64_t, "robot", 1), IconType::Robot);
             robot->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
             robot->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
@@ -79,7 +79,7 @@ class $modify(CharacterColorPage) {
                 robot->disableGlowOutline();
             }
 
-            auto spider = as<SimplePlayer*>(layer->getChildByID("spider-icon"));
+            auto spider = static_cast<SimplePlayer*>(layer->getChildByID("spider-icon"));
             spider->updatePlayerFrame(GDI_GET_VALUE(int64_t, "spider", 1), IconType::Spider);
             spider->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
             spider->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
@@ -89,7 +89,7 @@ class $modify(CharacterColorPage) {
                 spider->disableGlowOutline();
             }
 
-            auto swing = as<SimplePlayer*>(layer->getChildByID("swing-icon"));
+            auto swing = static_cast<SimplePlayer*>(layer->getChildByID("swing-icon"));
             swing->updatePlayerFrame(GDI_GET_VALUE(int64_t, "swing", 1), IconType::Swing);
             swing->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
             swing->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
@@ -119,7 +119,7 @@ class $modify(CharacterColorPage) {
             });
 
             // ??? i have no idea why i need to do !player2Glow
-            as<CCMenuItemToggler*>(menu->getChildByID("glow-toggler"))->toggle(!GDI_GET_VALUE(bool, "glow", false));
+            static_cast<CCMenuItemToggler*>(menu->getChildByID("glow-toggler"))->toggle(!GDI_GET_VALUE(bool, "glow", false));
         }
 
         return true;
@@ -129,7 +129,7 @@ class $modify(CharacterColorPage) {
         CharacterColorPage::toggleShip(sender);
         
         if (GDI_GET_VALUE(bool, "2pselected", false)) {
-            auto ship = as<CCMenuItemSpriteExtra*>(sender)->getChildByType<SimplePlayer>(0);
+            auto ship = static_cast<CCMenuItemSpriteExtra*>(sender)->getChildByType<SimplePlayer>(0);
 
             switch (m_fields->shipType) {
                 case IconType::Ship:
@@ -175,7 +175,7 @@ class $modify(CharacterColorPage) {
                 menu->getChildByID(std::to_string(GDI_GET_VALUE(int64_t, "colorglow", 0)))->getPositionY() + menu->getPositionY()
             });
 
-            m_fields->colorMode = as<CCMenuItemSpriteExtra*>(sender)->getTag();
+            m_fields->colorMode = static_cast<CCMenuItemSpriteExtra*>(sender)->getTag();
         }
     }
 
@@ -199,16 +199,16 @@ class $modify(CharacterColorPage) {
             auto menu = layer->getChildByID("buttons-menu");
             std::vector<SimplePlayer*> icons;
 
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("cube-icon")));
+            icons.push_back(static_cast<SimplePlayer*>(layer->getChildByID("cube-icon")));
             icons.push_back(layer->getChildByID("buttons-menu")->getChildByID("ship-button")->getChildByType<SimplePlayer>(0));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("ball-icon")));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("ufo-icon")));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("wave-icon")));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("robot-icon")));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("spider-icon")));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("swing-icon")));
+            icons.push_back(static_cast<SimplePlayer*>(layer->getChildByID("ball-icon")));
+            icons.push_back(static_cast<SimplePlayer*>(layer->getChildByID("ufo-icon")));
+            icons.push_back(static_cast<SimplePlayer*>(layer->getChildByID("wave-icon")));
+            icons.push_back(static_cast<SimplePlayer*>(layer->getChildByID("robot-icon")));
+            icons.push_back(static_cast<SimplePlayer*>(layer->getChildByID("spider-icon")));
+            icons.push_back(static_cast<SimplePlayer*>(layer->getChildByID("swing-icon")));
 
-            auto player2 = as<SimplePlayer*>(CCDirector::get()->getRunningScene()->getChildByID("GJGarageLayer")->getChildByID("player2-icon"));
+            auto player2 = static_cast<SimplePlayer*>(CCDirector::get()->getRunningScene()->getChildByID("GJGarageLayer")->getChildByID("player2-icon"));
             CCNode* cursor = nullptr;
 
             switch (m_fields->colorMode) {
@@ -301,18 +301,18 @@ class $modify(CharacterColorPage) {
             auto menu = layer->getChildByID("buttons-menu");
             std::vector<SimplePlayer*> icons;
 
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("cube-icon")));
+            icons.push_back(static_cast<SimplePlayer*>(layer->getChildByID("cube-icon")));
             icons.push_back(layer->getChildByID("buttons-menu")->getChildByID("ship-button")->getChildByType<SimplePlayer>(0));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("ball-icon")));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("ufo-icon")));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("wave-icon")));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("robot-icon")));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("spider-icon")));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("swing-icon")));
+            icons.push_back(static_cast<SimplePlayer*>(layer->getChildByID("ball-icon")));
+            icons.push_back(static_cast<SimplePlayer*>(layer->getChildByID("ufo-icon")));
+            icons.push_back(static_cast<SimplePlayer*>(layer->getChildByID("wave-icon")));
+            icons.push_back(static_cast<SimplePlayer*>(layer->getChildByID("robot-icon")));
+            icons.push_back(static_cast<SimplePlayer*>(layer->getChildByID("spider-icon")));
+            icons.push_back(static_cast<SimplePlayer*>(layer->getChildByID("swing-icon")));
 
-            auto player2 = as<SimplePlayer*>(CCDirector::get()->getRunningScene()->getChildByID("GJGarageLayer")->getChildByID("player2-icon"));
+            auto player2 = static_cast<SimplePlayer*>(CCDirector::get()->getRunningScene()->getChildByID("GJGarageLayer")->getChildByID("player2-icon"));
 
-            GDI_SET_VALUE(bool, "glow", as<CCMenuItemToggler*>(sender)->isOn());
+            GDI_SET_VALUE(bool, "glow", static_cast<CCMenuItemToggler*>(sender)->isOn());
 
 
             for (auto* icon : icons) {
